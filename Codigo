@@ -1,0 +1,88 @@
+using System;
+using System.Collections.Generic;
+
+public class Pessoa
+{
+    public string Nome { get; set; }
+    public int Idade { get; set; }
+
+    public Pessoa(string nome, int idade)
+    {
+        Nome = nome;
+        Idade = idade;
+    }
+}
+
+public class Suite
+{
+    public string Tipo { get; set; }
+    public double ValorDiaria { get; set; }
+
+    public Suite(string tipo, double valorDiaria)
+    {
+        Tipo = tipo;
+        ValorDiaria = valorDiaria;
+    }
+}
+
+public class Reserva
+{
+    public Pessoa Hóspede { get; set; }
+    public Suite Suite { get; set; }
+    public int Dias { get; set; }
+
+    public Reserva(Pessoa hóspede, Suite suite, int dias)
+    {
+        Hóspede = hóspede;
+        Suite = suite;
+        Dias = dias;
+    }
+
+    public double CalcularValorTotal()
+    {
+        double valorTotal = Suite.ValorDiaria * Dias;
+
+        // Aplica o desconto de 10% se a reserva for para mais de 10 dias
+        if (Dias > 10)
+        {
+            valorTotal *= 0.90; // 10% de desconto
+        }
+
+        return valorTotal;
+    }
+
+    public int QuantidadeHospedes()
+    {
+        // Aqui você pode definir a lógica para retornar a quantidade de hóspedes.
+        // Por enquanto, retornaremos sempre 1 para simplificação.
+        return 1; // Mude isso conforme a lógica desejada
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        // Exemplo de uso do sistema de reservas
+
+        // Criando um hóspede
+        Pessoa hospede = new Pessoa("João Silva", 30);
+
+        // Criando uma suíte
+        Suite suite = new Suite("Luxo", 200.00); // 200.00 é o valor da diária
+
+        // Criando uma reserva
+        Reserva reserva = new Reserva(hospede, suite, 12); // 12 dias
+
+        // Calculando o valor total da reserva
+        double valorTotal = reserva.CalcularValorTotal();
+        int quantidadeHospedes = reserva.QuantidadeHospedes();
+
+        // Exibindo os resultados
+        Console.WriteLine($"Hóspede: {hospede.Nome}");
+        Console.WriteLine($"Tipo da Suíte: {suite.Tipo}");
+        Console.WriteLine($"Número de Dias: {reserva.Dias}");
+        Console.WriteLine($"Quantidade de Hóspedes: {quantidadeHospedes}");
+        Console.WriteLine($"Valor Total da Reserva: R$ {valorTotal:F2}");
+    }
+}
